@@ -8,17 +8,17 @@ if (!challenge) {
     return new Error("Expected a consent challenge to be set but received none.");
 }
 
-const { data } = await oryOAuth.getOAuth2ConsentRequest({ consentChallenge: challenge })
+const consentRequest = await oryOAuth.getOAuth2ConsentRequest({ consentChallenge: challenge })
 
-const { data: identity } = await oryId.getIdentity({
-    id: data.subject!
+const identity = await oryId.getIdentity({
+    id: consentRequest.subject!
 })
 
-const { data: body } = await oryOAuth.acceptOAuth2ConsentRequest({
+const consentSuccess = await oryOAuth.acceptOAuth2ConsentRequest({
         consentChallenge: challenge,
         acceptOAuth2ConsentRequest: {
-            grant_scope: data.requested_scope,
-            grant_access_token_audience: data.requested_access_token_audience,
+            grant_scope: consentRequest.requested_scope,
+            grant_access_token_audience: consentRequest.requested_access_token_audience,
             session: {
                 id_token: {
                     NS: "account",
@@ -31,5 +31,5 @@ const { data: body } = await oryOAuth.acceptOAuth2ConsentRequest({
             }
         }
     })
-return Response.redirect(body.redirect_to);
+return Response.redirect(consentSuccess.redirect_to);
 ---

@@ -15,24 +15,24 @@ const {
 
 const loginChallenge = login_challenge;
 
-const cookie = Astro.request.headers.get('cookie');
-var { data: session } = await ory.toSession(undefined,{ headers: { Cookie: cookie } }).catch(()=>({ data: null }));
+const cookie = Astro.request.headers.get('cookie')!;
+var session = await ory.toSession(undefined,{ headers: { Cookie: cookie } }).catch(()=>null);
 if (session && loginChallenge) {
     
-    const { data: body } = await oryOAuth.acceptOAuth2LoginRequest({
+    const loginSuccess = await oryOAuth.acceptOAuth2LoginRequest({
         loginChallenge,
         acceptOAuth2LoginRequest: {
             subject: session.identity.id
         }
     });
-    return Response.redirect(body.redirect_to);
+    return Response.redirect(loginSuccess.redirect_to);
 }
 const loginFlow = await ory.createBrowserLoginFlow({
                     refresh: refresh ? Boolean(refresh) : undefined,
                     aal,
                     returnTo: return_to,
                     loginChallenge,
-                }).then(({ data }) => data);
+                });
 
 ---
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>

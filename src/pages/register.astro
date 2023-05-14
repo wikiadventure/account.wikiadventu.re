@@ -15,7 +15,7 @@ const loginChallenge = login_challenge;
 const registerFlow = await ory.createBrowserRegistrationFlow({
                     returnTo: return_to,
                     loginChallenge,
-                }).then(({ data }) => data);
+                });
 
 ---
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>
