@@ -1,0 +1,35 @@
+---
+import { oryId, oryOAuth } from "../../ory/api";
+
+const url = new URL(Astro.request.url);
+
+const challenge = url.searchParams.get('consent_challenge');
+if (!challenge) {
+    return new Error("Expected a consent challenge to be set but received none.");
+}
+
+const { data } = await oryOAuth.getOAuth2ConsentRequest({ consentChallenge: challenge })
+
+const { data: identity } = await oryId.getIdentity({
+    id: data.subject!
+})
+
+const { data: body } = await oryOAuth.acceptOAuth2ConsentRequest({
+        consentChallenge: challenge,
+        acceptOAuth2ConsentRequest: {
+            grant_scope: data.requested_scope,
+            grant_access_token_audience: data.requested_access_token_audience,
+            session: {
+                id_token: {
+                    NS: "account",
+                    DB: "account",
+                    SC: "user_account",
+                    tk: "ory_token",
+                    username: identity.traits.username,
+                    email: identity.traits.email,
+                }
+            }
+        }
+    })
+return Response.redirect(body.redirect_to);
+---

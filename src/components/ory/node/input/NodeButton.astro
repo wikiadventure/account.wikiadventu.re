@@ -1,0 +1,11 @@
+---
+import type { UiNode, UiNodeInputAttributes } from "@ory/client";
+
+interface Props {
+  node: UiNode & { attributes: UiNodeInputAttributes }
+}
+const { node } = Astro.props;
+---
+<button type="submit" name={node.attributes.name} value={node.attributes.value} disabled={node.attributes.disabled}>
+  { node.meta.label?.text }
+</button>

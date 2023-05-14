@@ -1,0 +1,21 @@
+---
+import type { UiNode, UiNodeTextAttributes, UiText } from "@ory/client";
+
+
+interface Props {
+  node: UiNode & { attributes: UiNodeTextAttributes & {text: { context: UiText[]} } }
+}
+const { node } = Astro.props;
+---
+<p>{ node.meta?.label?.text }</p>
+{
+  node.attributes.text.id == 1050015 ?
+    <div>
+      {node.attributes.text.context.map(text=>
+        <code is-used={text.id === 1050014}>{ text.text }</code>
+      )}
+    </div> :
+    <code>{ node.attributes.text.text }</code>
+}
+
+  

@@ -1,0 +1,19 @@
+---
+import Node from "./Node.astro";
+import type { LoginFlow, RecoveryFlow, RegistrationFlow, SettingsFlow, UiNode, VerificationFlow } from "@ory/client";
+
+interface Props {
+    flow: LoginFlow | RegistrationFlow | SettingsFlow |
+            VerificationFlow | RecoveryFlow;
+}
+const { flow } = Astro.props;
+
+const [oidcNodes, defaultNodes] = 
+    flow.ui.nodes.reduce<UiNode[][]>(([oidc, defaults], e) => (e.group == "oidc" ? [[...oidc, e], defaults] : [oidc, [...defaults, e]]), [[], []]);
+
+---
+<form action={flow.ui.action} method={flow.ui.method}>
+    {defaultNodes.map(node=>
+        <Node node={node}/>
+    )} 
+</form>

@@ -1,0 +1,83 @@
+---
+import PulsarLayout from "./pulsarLayout.astro";
+
+interface Props {
+    title: string,
+    meta: {
+        title: string
+        description: string
+    }
+}
+const { title, meta } = Astro.props;
+
+---
+<PulsarLayout title={title} meta={meta}>
+    <main ory-layout>
+        <slot/>
+    </main>
+</PulsarLayout>
+<style lang="scss" is:global>
+[ory-layout] {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+
+    :is(h1, h2) {
+        text-align: center;
+    }
+    section {
+        
+        max-width: 1000px;
+        background: #090909;
+        border: 2px solid #0ffa;
+        padding: 25px;
+        border-radius: 15px;
+        filter: drop-shadow(0 0 10px #0ffc);
+    }
+    form {
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    label {
+        /* margin-top: 10px; */
+    }
+    input {
+        background: transparent;
+        border: 1px solid #0ff3;
+        padding: 10px 2ch;
+        color: #fff;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        &:is(:focus, :focus-visible) {
+            border: 1px solid #0ff7;
+            outline: 1px solid #0ff3;
+            outline-offset: 2px;
+        }
+    }
+    button {
+        /* justify-self: center; */
+        align-self: center;
+        background: transparent;
+        color: #fff;
+        font-size: 1.5em;
+        padding: 5px 15px;
+        border: 1.5px solid #fff;
+        border-radius: 8px;
+        filter: drop-shadow(0 0 3px #0ffc) drop-shadow(0 0 5px #0ffc);
+        cursor: pointer;
+        /* margin: 15px 0; */
+        &:hover {
+            outline: 1.5px solid #fff;
+        }
+        &:is(:focus, :focus-visible) {
+            outline: 2px solid #fff;
+        }
+
+    }
+}
+</style>

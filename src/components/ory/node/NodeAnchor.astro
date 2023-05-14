@@ -1,0 +1,10 @@
+---
+import type { UiNode, UiNodeAnchorAttributes } from "@ory/client";
+
+interface Props {
+  node: UiNode & { attributes: UiNodeAnchorAttributes }
+}
+const { node } = Astro.props;
+
+---
+<a href={node.attributes.href}>{ node.attributes.title.text }</a>

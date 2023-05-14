@@ -1,0 +1,22 @@
+---
+import type { UiNode } from "@ory/client";
+import NodeAnchor from "./node/NodeAnchor.astro";
+import NodeInput from "./node/NodeInput.astro";
+import NodeImage from "./node/NodeImage.astro";
+import NodeScript from "./node/NodeScript.astro";
+import NodeText from "./node/NodeText.astro";
+
+interface Props {
+  node: UiNode & { attributes: any }
+}
+const { node } = Astro.props;
+const { type } = node;
+---
+{
+  type == "a"     ? <NodeAnchor node={node}/> :
+  type == "input" ? <NodeInput  node={node}/> :
+  type == "img"   ? <NodeImage  node={node}/> :
+  type == "script"? <NodeScript node={node}/> :
+  type == "text"  ? <NodeText   node={node}/> :
+  <NodeText node={node}/>
+}

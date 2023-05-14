@@ -10,6 +10,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^2.4.1"
+    "astro": "^2.4.5"
+  },
+  "devDependencies": {
+    "@astrojs/netlify": "^2.2.2",
+    "@ory/client": "^1.1.28",
+    "sass": "^1.62.1"
   }
 }

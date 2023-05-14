@@ -1,0 +1,52 @@
+---
+import OryForm from "../components/ory/OryForm.astro";
+import OryLayout from "../layout/OryLayout.astro";
+import { ory, oryOAuth } from "../ory/api";
+
+const url = new URL(Astro.request.url);
+
+const {
+    return_to,
+    flow,
+    refresh,  // Refresh means we want to refresh the session. This is needed, for example, when we want to update the password of a user.
+    aal,      // AAL = Authorization Assurance Level. This implies that we want to upgrade the AAL, meaning that we want to perform two-factor authentication/verification.
+    login_challenge
+} = Object.fromEntries(url.searchParams);
+
+const loginChallenge = login_challenge;
+
+const cookie = Astro.request.headers.get('cookie');
+var { data: session } = await ory.toSession(undefined,{ headers: { Cookie: cookie } }).catch(()=>({ data: null }));
+if (session && loginChallenge) {
+    
+    const { data: body } = await oryOAuth.acceptOAuth2LoginRequest({
+        loginChallenge,
+        acceptOAuth2LoginRequest: {
+            subject: session.identity.id
+        }
+    });
+    return Response.redirect(body.redirect_to);
+}
+const loginFlow = await ory.createBrowserLoginFlow({
+                    refresh: refresh ? Boolean(refresh) : undefined,
+                    aal,
+                    returnTo: return_to,
+                    loginChallenge,
+                }).then(({ data }) => data);
+
+---
+<OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>
+    <main login-page>
+        <section>
+            <h1>Wiki Adventure account</h1>
+            <h2>Login</h2>
+            <OryForm flow={loginFlow}/>
+            <p>Lost your password? <a href="/recover">Recover</a> your account!</p>
+            <p>No account? <a href="/register">Register</a> one!</p>
+        </section>
+    </main>
+</OryLayout>
+<style lang="scss" is:global>
+
+</style>
+    

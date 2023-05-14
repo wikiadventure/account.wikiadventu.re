@@ -1,0 +1,60 @@
+---
+
+interface Props {
+    title: string,
+    meta: {
+        title: string
+        description: string
+    }
+}
+const { title, meta } = Astro.props;
+
+---
+<html>
+    <head>
+        <meta charset="UTF-8" >
+        <link rel="icon" href="/favicon.ico" >
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+        <title>{ title }</title>
+        <meta name="title" content={meta.title}>
+        <meta name="description" content={meta.description}>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="alternate icon" href="/favicon.ico" type="image/png" sizes="16x16">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+        <link rel="mask-icon" href="/favicon.svg" color="#FFFFFF">
+        <meta name="theme-color" content="#222222">
+    </head>
+    <body>
+        <slot/>
+    </body>
+</html>
+<style lang="scss" is:global>
+* {
+    box-sizing: border-box;
+}
+html, body {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: #000;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #fff;
+    
+}
+body > *:nth-child(1)::before {
+    content: "";
+    position: absolute;
+    background: linear-gradient(90deg, rgb(11.765% 98.431% 99.608%) 0%, rgb(11.758% 98.39% 99.608%) 6.25%, rgb(11.708% 98.099% 99.611%) 12.5%, rgb(11.573% 97.303% 99.618%) 18.75%, rgb(11.307% 95.728% 99.632%) 25%, rgb(10.853% 93.053% 99.656%) 31.25%, rgb(10.142% 88.863% 99.691%) 37.5%, rgb(9.066% 82.538% 99.739%) 43.75%, rgb(7.434% 72.979% 99.804%) 50%, rgb(5.445% 61.425% 99.869%) 56.25%, rgb(3.538% 50.435% 99.917%) 62.5%, rgb(2.047% 40.161% 99.952%) 68.75%, rgb(1.048% 30.873% 99.976%) 75%, rgb(0.442% 23.059% 99.99%) 81.25%, rgb(0.131% 17.518% 99.997%) 87.5%, rgb(0.016% 14.92% 100%) 93.75%, rgb(0% 14.51% 100%) 100% );
+    filter: blur(20vh) contrast(1);
+    height: 40vh;
+    width: 100%;
+    bottom: -30vh;
+    animation: pulse 10s ease-in-out infinite alternate;
+    @keyframes pulse {
+        100% {
+            filter: blur(20vh) contrast(2) ;
+        }
+    }
+}
+
+</style>

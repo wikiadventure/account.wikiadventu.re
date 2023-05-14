@@ -1,0 +1,9 @@
+---
+import type { UiNode, UiNodeImageAttributes } from "@ory/client";
+
+interface Props {
+  node: UiNode & { attributes: UiNodeImageAttributes }
+}
+const { node } = Astro.props;
+---
+<img src={node.attributes.src} alt={node.meta.label?.text}>

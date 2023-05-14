@@ -1,0 +1,9 @@
+---
+import type { UiNode, UiNodeInputAttributes } from "@ory/client";
+
+interface Props {
+  node: UiNode & { attributes: UiNodeInputAttributes }
+}
+const { node } = Astro.props;
+---
+<input type="hidden" name={node.attributes.name} value={node.attributes.value}>

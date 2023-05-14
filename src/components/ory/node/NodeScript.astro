@@ -1,0 +1,23 @@
+---
+import type { UiNode, UiNodeScriptAttributes } from "@ory/client"
+
+interface Props {
+  node: UiNode & { attributes: UiNodeScriptAttributes }
+}
+const { node } = Astro.props;
+
+const {
+  src,
+  async,
+  crossorigin,
+  integrity,
+  referrerpolicy,
+  type
+} = node.attributes;
+
+---
+<script src={src} async={async} crossorigin={crossorigin}
+        integrity={integrity} referrerpolicy={referrerpolicy}
+        type={type}>
+
+</script>
