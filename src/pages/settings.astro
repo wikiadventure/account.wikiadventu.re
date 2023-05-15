@@ -20,13 +20,11 @@ if (!settingsFlow) return Response.redirect(getUrlForFlow("settings", url.search
 
 ---
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>
-    <main login-page>
-        <section>
-            <h1>Wiki Adventure account</h1>
-            <h2>Settings</h2>
-            <OryForm flow={settingsFlow}/>
-        </section>
-    </main>
+    <section settings-section>
+        <h1>Wiki Adventure account</h1>
+        <h2>Settings</h2>
+        <OryForm flow={settingsFlow}/>
+    </section>
 </OryLayout>
 <style lang="scss" is:global>
 

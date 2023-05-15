@@ -20,13 +20,11 @@ if (!recoverFlow) return Response.redirect(getUrlForFlow("recovery", url.searchP
 
 ---
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>
-    <main login-page>
-        <section>
-            <h1>Wiki Adventure account</h1>
-            <h2>Recover</h2>
-            <OryForm flow={recoverFlow}/>
-        </section>
-    </main>
+    <section recover-section>
+        <h1>Wiki Adventure account</h1>
+        <h2>Recover</h2>
+        <OryForm flow={recoverFlow}/>
+    </section>
 </OryLayout>
 <style lang="scss" is:global>
 

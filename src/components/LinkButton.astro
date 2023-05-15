@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'a'>;
+const props = Astro.props;
+---
+<a link-button {...props}>
+    <slot></slot>
+</a>
+<style lang="scss" is:global >
+[link-button] {
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: 900;
+    display: block;
+    padding: 1ch 2ch;
+    border: 2px solid currentColor;
+    border-radius: 5px;
+    transition: all ease-in-out .1s;
+    &:hover {
+        filter: brightness(1.1) drop-shadow(0 0 5px currentColor);
+
+    }
+}
+</style>

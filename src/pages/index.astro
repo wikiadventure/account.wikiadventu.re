@@ -1,15 +1,50 @@
 ---
----
+import LinkButton from "../components/LinkButton.astro";
+import OryLayout from "../layout/OryLayout.astro";
+import { getUrlForFlow, ory } from "../ory/api";
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+const cookie = Astro.request.headers.get('cookie')!;
+const session = await ory.toSession(undefined,{ headers: { Cookie: cookie } }).catch(()=>null);
+
+const logoutUrl = session ? await ory.createBrowserLogoutFlow({ cookie }).then(d=>d.logout_url).catch(()=>"") : "";
+
+const title = "Wiki Adventure account";
+const description = "Welcome to the Wiki Adventure account portal where create and manage your account.";
+
+const loginUrl 		= getUrlForFlow("login");
+const registerUrl 	= getUrlForFlow("registration");
+
+---
+<OryLayout title={title} meta={{title, description}}>
+	<section index-page>
+		<h1>{ title }</h1>
+		{ session ?
+			<p>Welcome {session!.identity.traits.username}!</p>
+			<div ory-action>
+				<LinkButton ory-logout href={logoutUrl}>Logout</LinkButton>
+			</div>
+			:
+			<div ory-action>
+				<LinkButton ory-login href={loginUrl}>Login</LinkButton>
+				<LinkButton ory-register href={registerUrl}>Register</LinkButton>
+			</div>
+		}
+	</section>
+</OryLayout>
+<style lang="scss" is:global>
+[ory-action] {
+	display: flex;
+	justify-content: center;
+	gap: 2ch;
+}
+[ory-logout] {
+	color: #fd4848;
+}
+[ory-login] {
+	color: hsl(206, 75%, 50%);
+}
+[ory-register] {
+	color: hsl(150, 75%, 50%);
+}
+</style>
+
