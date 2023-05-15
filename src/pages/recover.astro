@@ -10,9 +10,11 @@ const {
     flow,
 } = Object.fromEntries(url.searchParams);
 
+const cookie = Astro.request.headers.get('cookie')!;
+
 var recoverFlow:RecoveryFlow | null = null;
 if (flow) {
-    recoverFlow = await ory.getRecoveryFlow({id:flow}).catch(()=>null);
+    recoverFlow = await ory.getRecoveryFlow({ id: flow, cookie }).catch(()=>null);
 }
 if (!recoverFlow) return Response.redirect(getUrlForFlow("recovery", url.searchParams));
 

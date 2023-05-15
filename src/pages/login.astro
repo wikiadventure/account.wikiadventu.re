@@ -7,10 +7,7 @@ import { getUrlForFlow, ory, oryOAuth } from "../ory/api";
 const url = new URL(Astro.request.url);
 
 const {
-    return_to,
     flow,
-    refresh,  // Refresh means we want to refresh the session. This is needed, for example, when we want to update the password of a user.
-    aal,      // AAL = Authorization Assurance Level. This implies that we want to upgrade the AAL, meaning that we want to perform two-factor authentication/verification.
     login_challenge
 } = Object.fromEntries(url.searchParams);
 
@@ -30,7 +27,7 @@ if (session && loginChallenge) {
 }
 var loginFlow:LoginFlow | null = null;
 if (flow) {
-    loginFlow = await ory.getLoginFlow({id:flow}).catch(()=>null);
+    loginFlow = await ory.getLoginFlow({ id: flow, cookie }).catch(()=>null);
 }
 if (!loginFlow) return Response.redirect(getUrlForFlow("login", url.searchParams));
 

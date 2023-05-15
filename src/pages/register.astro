@@ -10,9 +10,11 @@ const {
     flow,
 } = Object.fromEntries(url.searchParams);
 
+const cookie = Astro.request.headers.get('cookie')!;
+
 var registerFlow:RegistrationFlow | null = null;
 if (flow) {
-    registerFlow = await ory.getRegistrationFlow({id:flow}).catch(()=>null);
+    registerFlow = await ory.getRegistrationFlow({ id: flow, cookie }).catch(()=>null);
 }
 if (!registerFlow) return Response.redirect(getUrlForFlow("registration", url.searchParams));
 

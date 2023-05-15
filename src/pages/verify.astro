@@ -10,9 +10,11 @@ const {
     flow,
 } = Object.fromEntries(url.searchParams);
 
+const cookie = Astro.request.headers.get('cookie')!;
+
 var verifyFlow:VerificationFlow | null = null;
 if (flow) {
-    verifyFlow = await ory.getVerificationFlow({id:flow}).catch(()=>null);
+    verifyFlow = await ory.getVerificationFlow({ id: flow, cookie }).catch(()=>null);
 }
 if (!verifyFlow) return Response.redirect(getUrlForFlow("verification", url.searchParams));
 ---

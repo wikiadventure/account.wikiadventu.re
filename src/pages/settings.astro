@@ -10,9 +10,11 @@ const {
     flow
 } = Object.fromEntries(url.searchParams);
 
+const cookie = Astro.request.headers.get('cookie')!;
+
 var settingsFlow:SettingsFlow | null = null;
 if (flow) {
-    settingsFlow = await ory.getSettingsFlow({id:flow}).catch(()=>null);
+    settingsFlow = await ory.getSettingsFlow({ id: flow, cookie }).catch(()=>null);
 }
 if (!settingsFlow) return Response.redirect(getUrlForFlow("settings", url.searchParams));
 
