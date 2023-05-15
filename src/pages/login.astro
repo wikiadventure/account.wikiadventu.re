@@ -1,7 +1,8 @@
 ---
+import type { LoginFlow } from "@ory/client";
 import OryForm from "../components/ory/OryForm.astro";
 import OryLayout from "../layout/OryLayout.astro";
-import { ory, oryOAuth } from "../ory/api";
+import { getUrlForFlow, ory, oryOAuth } from "../ory/api";
 
 const url = new URL(Astro.request.url);
 
@@ -27,12 +28,11 @@ if (session && loginChallenge) {
     });
     return Response.redirect(loginSuccess.redirect_to);
 }
-const loginFlow = await ory.createBrowserLoginFlow({
-                    refresh: refresh ? Boolean(refresh) : undefined,
-                    aal,
-                    returnTo: return_to,
-                    loginChallenge,
-                });
+var loginFlow:LoginFlow | null = null;
+if (flow) {
+    loginFlow = await ory.getLoginFlow({id:flow}).catch(()=>null);
+}
+if (!loginFlow) return Response.redirect(getUrlForFlow("login", url.searchParams));
 
 ---
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>
@@ -40,7 +40,7 @@ const loginFlow = await ory.createBrowserLoginFlow({
         <section>
             <h1>Wiki Adventure account</h1>
             <h2>Login</h2>
-            <OryForm flow={loginFlow}/>
+            <OryForm flow={loginFlow!}/>
             <p>Lost your password? <a href="/recover">Recover</a> your account!</p>
             <p>No account? <a href="/register">Register</a> one!</p>
         </section>

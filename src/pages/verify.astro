@@ -1,18 +1,20 @@
 ---
+import type { VerificationFlow } from "@ory/client";
 import OryForm from "../components/ory/OryForm.astro";
 import OryLayout from "../layout/OryLayout.astro";
-import { ory } from "../ory/api";
+import { getUrlForFlow, ory } from "../ory/api";
 
 const url = new URL(Astro.request.url);
 
 const {
-    return_to,
+    flow,
 } = Object.fromEntries(url.searchParams);
 
-const verifyFlow = await ory.createBrowserVerificationFlow({
-                    returnTo: return_to,
-                });
-
+var verifyFlow:VerificationFlow | null = null;
+if (flow) {
+    verifyFlow = await ory.getVerificationFlow({id:flow}).catch(()=>null);
+}
+if (!verifyFlow) return Response.redirect(getUrlForFlow("verification", url.searchParams));
 ---
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>
     <main login-page>

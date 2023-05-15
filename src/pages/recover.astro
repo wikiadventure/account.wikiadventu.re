@@ -1,17 +1,20 @@
 ---
+import type { RecoveryFlow } from "@ory/client";
 import OryForm from "../components/ory/OryForm.astro";
 import OryLayout from "../layout/OryLayout.astro";
-import { ory } from "../ory/api";
+import { getUrlForFlow, ory } from "../ory/api";
 
 const url = new URL(Astro.request.url);
 
 const {
-    return_to,
+    flow,
 } = Object.fromEntries(url.searchParams);
 
-const recoverFlow = await ory.createBrowserRecoveryFlow({
-                    returnTo: return_to,
-                });
+var recoverFlow:RecoveryFlow | null = null;
+if (flow) {
+    recoverFlow = await ory.getRecoveryFlow({id:flow}).catch(()=>null);
+}
+if (!recoverFlow) return Response.redirect(getUrlForFlow("recovery", url.searchParams));
 
 ---
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>
