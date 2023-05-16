@@ -7,6 +7,7 @@ const cookie = Astro.request.headers.get('cookie')!;
 const session = await ory.toSession(undefined,{ headers: { Cookie: cookie } }).catch(()=>null);
 
 const logoutUrl = session ? await ory.createBrowserLogoutFlow({ cookie }).then(d=>d.logout_url).catch(()=>"") : "";
+const settingsUrl = session ? getUrlForFlow("settings") : "";
 
 const title = "Wiki Adventure account";
 const description = "Welcome to the Wiki Adventure account portal where create and manage your account.";
@@ -21,6 +22,7 @@ const registerUrl 	= getUrlForFlow("registration");
 		{ session ?
 			<p>Welcome {session!.identity.traits.username}!</p>
 			<div ory-action>
+				<LinkButton ory-logout href={settingsUrl}>Settings</LinkButton>
 				<LinkButton ory-logout href={logoutUrl}>Logout</LinkButton>
 			</div>
 			:
