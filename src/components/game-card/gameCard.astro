@@ -1,0 +1,75 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'a'>;
+const props = Astro.props;
+---
+<a game-card {...props}>
+    <slot/>
+</a>
+<style lang="scss" is:global>
+[game-card] {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    flex: 0 0 40ch;
+    max-width: 100%;
+    padding: 15px 15px 30px 15px;
+    
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    background: linear-gradient(45deg,hsl(278,0%,13%) 0%,hsl(185,0%,20%) 100%);
+    backdrop-filter: blur(5px);
+    text-decoration: none;
+    font-size: 1.25em;
+
+    transition: all ease-in-out .2s;
+    & , &::before , &::after {
+        border: 1px solid rgba(255,255,255,.27);
+        box-shadow: 0 0 1px 2px #0ff;
+        border-radius: 30px;
+    }
+    &::before , &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: all ease-in-out .2s;
+    }
+    &:hover::before {
+        transform: scale(1.025);
+        opacity: 0.5;
+    }
+    &:hover::after {
+        transform: scale(1.05);
+        opacity: 0.25;
+    }
+    &::before , &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+    }
+    > svg {
+        width: 20ch;
+        max-height: 20ch;
+        transition: all ease-in-out .2s;
+    }
+    > p {
+        margin: 0;
+    }
+    > h3 {
+        margin: 0;
+    }
+    &:hover {
+        filter: saturate(1.3) brightness(1.1);
+        background: linear-gradient(85deg, rgb(36, 22, 45) 0%, rgb(25, 72, 77) 100%);
+        > svg {
+            transform: scale(1.05);
+        }
+    }
+}
+</style>

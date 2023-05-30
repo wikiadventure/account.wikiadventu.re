@@ -25,36 +25,67 @@ const { title, meta } = Astro.props;
         <meta name="theme-color" content="#222222">
     </head>
     <body>
-        <slot/>
+        <div>
+            <slot/>
+        </div>
     </body>
 </html>
 <style lang="scss" is:global>
+:root {
+    --color-text: #ddd;
+    --color-bg: #03151c;
+    --color-1: #088395;
+    --color-2: #05bfdb;
+    --color-accent: #00ffca;
+}
 * {
     box-sizing: border-box;
+}
+
+html {
+    background: var(--color-bg);
 }
 html, body {
     width: 100%;
     padding: 0;
     margin: 0;
-    background: #000;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: #fff;
+    color: var(--color-text);
     
 }
-body > *:nth-child(1)::before {
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #fff;
+    background: #000;
+}
+
+body {
+    overflow: hidden;
+    min-height: 100vh;
+}
+body::before {
     content: "";
     position: absolute;
-    background: linear-gradient(90deg, rgb(11.765% 98.431% 99.608%) 0%, rgb(11.758% 98.39% 99.608%) 6.25%, rgb(11.708% 98.099% 99.611%) 12.5%, rgb(11.573% 97.303% 99.618%) 18.75%, rgb(11.307% 95.728% 99.632%) 25%, rgb(10.853% 93.053% 99.656%) 31.25%, rgb(10.142% 88.863% 99.691%) 37.5%, rgb(9.066% 82.538% 99.739%) 43.75%, rgb(7.434% 72.979% 99.804%) 50%, rgb(5.445% 61.425% 99.869%) 56.25%, rgb(3.538% 50.435% 99.917%) 62.5%, rgb(2.047% 40.161% 99.952%) 68.75%, rgb(1.048% 30.873% 99.976%) 75%, rgb(0.442% 23.059% 99.99%) 81.25%, rgb(0.131% 17.518% 99.997%) 87.5%, rgb(0.016% 14.92% 100%) 93.75%, rgb(0% 14.51% 100%) 100% );
-    filter: blur(20vh) contrast(1);
+    opacity: 0.7;
+    // background: linear-gradient(90deg, var(--color-2) 25%, var(--color-accent) 75% );
+    filter: blur(10vh) contrast(1);
+    
     height: 40vh;
-    width: 100%;
+    margin-left: -50vw;
+    width: 200vw;
     bottom: -30vh;
-    animation: pulse 10s ease-in-out infinite alternate;
+    // animation: pulse 10s ease-in-out infinite alternate;
     @keyframes pulse {
         100% {
-            filter: blur(20vh) contrast(2) ;
+            filter: blur(18vh) contrast(2);
         }
     }
+}
+body > div {
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    isolation: isolate;
 }
 
 </style>
