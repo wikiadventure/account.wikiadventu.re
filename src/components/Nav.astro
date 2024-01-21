@@ -23,15 +23,15 @@ const loginUrl = getUrlForFlow("login");
         { session.identity?.traits.username } 
     </a>
     { isSettingPage ?
-        <a href="/" title="home">
+        <a href="/" title="home" aria-label="home">
             <MaterialSymbolsHome />
         </a>
         :
-        <a href="/settings" title="logout">
+        <a href="/settings" title="settings" aria-label="settings">
             <MaterialSymbolsSettings />
         </a>
     }
-    <a href={logoutUrl} title="logout">
+    <a href={logoutUrl} title="logout" aria-label="logout">
         <MaterialSymbolsLogout />
     </a>
 
@@ -40,7 +40,7 @@ const loginUrl = getUrlForFlow("login");
     <div>
         not connected
     </div>
-    <a href={loginUrl}>
+    <a href={loginUrl} title="login" aria-label="login">
         <MaterialSymbolsLogin />
     </a>
 </>}
