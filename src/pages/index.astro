@@ -10,6 +10,7 @@ import SixDegreeLogo from "../assets/svg/sixDegree.svg?raw";
 import GameCard from "../components/game-card/gameCard.astro";
 import { getUrlForFlow, ory } from "../ory/api";
 import LinkButton from "../components/LinkButton.astro";
+import Nav from "../components/Nav.astro";
 
 const cookie = Astro.request.headers.get('cookie')!;
 const session = await ory.toSession(undefined,{ headers: { Cookie: cookie } }).catch(()=>null);
@@ -40,6 +41,7 @@ const registerUrl 	= getUrlForFlow("registration");
 	</head>
 	<body>
 		<div class="perspective">
+			<Nav/>
 			<Fragment set:html={starrySky} />
 			<figure sun-layer></figure>
 			<Fragment set:html={layer4} />
@@ -81,6 +83,9 @@ const registerUrl 	= getUrlForFlow("registration");
 			</main>
 
 		</div>
+		<script is:inline>
+			if(window.opener && !window.locationbar.visible) window.close();
+		</script>
 	</body>
 </html>
 <style lang="scss" is:global>

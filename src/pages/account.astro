@@ -1,0 +1,44 @@
+---
+import { getUrlForFlow, ory } from "../ory/api";
+import Nav from "../components/Nav.astro";
+
+const cookie = Astro.request.headers.get('cookie')!;
+const session = await ory.toSession(undefined,{ headers: { Cookie: cookie } }).catch(()=>null);
+if (!session) return  Astro.redirect("/");
+
+const logoutUrl = session ? await ory.createBrowserLogoutFlow({ cookie }).then(d=>d.logout_url).catch(()=>"") : "";
+const settingsUrl = session ? getUrlForFlow("settings") : "";
+
+const title = "Wiki Adventure account";
+const description = "Welcome to the Wiki Adventure account portal where create and manage your account.";
+
+---
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" >
+        <link rel="icon" href="/favicon.ico" >
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+        <title>{ title }</title>
+        <meta name="title" content={title}>
+        <meta name="description" content={description}>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="alternate icon" href="/favicon.ico" type="image/png" sizes="16x16">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+        <link rel="mask-icon" href="/favicon.svg" color="#FFFFFF">
+        <meta name="theme-color" content="#222222">
+	</head>
+	<body>
+		<main>
+			<Nav/>
+			<div style="width: 80vw;">
+				{
+					JSON.stringify(session?.identity?.traits)
+				}
+			</div>
+		</main>
+	</body>
+</html>
+<style lang="scss" is:global>
+
+</style>
+

@@ -1,0 +1,95 @@
+---
+import AbsoluteZero from "../../components/achievement/six-degree/AbsoluteZero.astro";
+import Godwin from "../../components/achievement/six-degree/Godwin.astro";
+import Hot from "../../components/achievement/six-degree/Hot.astro";
+import Over9000 from "../../components/achievement/six-degree/Over9000.astro";
+import OverHeat from "../../components/achievement/six-degree/OverHeat.astro";
+const title = "a";
+const description = "ab";
+---
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" >
+        <link rel="icon" href="/favicon.ico" >
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+        <title>{ title }</title>
+        <meta name="title" content={title}>
+        <meta name="description" content={description}>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="alternate icon" href="/favicon.ico" type="image/png" sizes="16x16">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+        <link rel="mask-icon" href="/favicon.svg" color="#FFFFFF">
+        <meta name="theme-color" content="#222222">
+	</head>
+	<body>
+        <main>
+            <h1>Stats Six Degree of Wiki Adventure</h1>
+            <div>Made a total of <strong>505</strong> queries</div>
+            <div>Reached 12°</div>
+            <div>Achievement 5 / 5</div>
+            <section six-degree-achievements>
+                <AbsoluteZero/>
+                <Godwin/>
+                <Hot/>
+                <Over9000/>
+                <OverHeat/>
+            </section>
+        </main>
+	</body>
+</html>
+<style lang="scss" is:global>
+	
+:root {
+    --color-text: #ddd;
+    --color-bg: #03151c;
+    --color-1: #088395;
+    --color-2: #05bfdb;
+    --color-accent: #00ffca;
+}
+* {
+    box-sizing: border-box;
+}
+
+html {
+    background: var(--color-bg);
+}
+html, body {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--color-text);
+    
+}
+html {
+	// perspective: 500px;
+	// transform-style: preserve-3d;
+}
+body {
+	background: #000;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #fff;
+	position: relative;
+	// transform-style: preserve-3d;
+    // transform: rotate3d(0,1,0,45deg) translateZ(-1000px) translateX(250px);
+
+	
+}
+main {
+    padding: 1ch;
+    display: flex;
+    flex-direction: column;
+    gap: 2ch;
+}
+[six-degree-achievements] {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5ch;
+    isolation: isolate;
+    padding-top: 15ch;
+
+}
+
+</style>
+

@@ -3,6 +3,7 @@ import type { SettingsFlow } from "@ory/client";
 import OryForm from "../components/ory/OryForm.astro";
 import OryLayout from "../layout/OryLayout.astro";
 import { getUrlForFlow, ory } from "../ory/api";
+import Nav from "../components/Nav.astro";
 
 const url = new URL(Astro.request.url);
 
@@ -19,7 +20,9 @@ if (flow) {
 if (!settingsFlow) return Response.redirect(getUrlForFlow("settings", url.searchParams));
 
 ---
+<Nav/>
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>
+    
     <section settings-section>
         <h1>Wiki Adventure account</h1>
         <h2>Settings</h2>
