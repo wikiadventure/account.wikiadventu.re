@@ -1,0 +1,63 @@
+---
+import GradientText from "../achievement/art/gradientText.astro";
+import AbsoluteZero from "../achievement/six-degree/AbsoluteZero.astro";
+import Godwin from "../achievement/six-degree/Godwin.astro";
+import Hot from "../achievement/six-degree/Hot.astro";
+import Over9000 from "../achievement/six-degree/Over9000.astro";
+import OverHeat from "../achievement/six-degree/OverHeat.astro";
+---
+<div class="Stats">
+    <section class="six-degree">
+        <h2>Six degree of Wiki Adventure</h2>
+        <div >
+            <p><GradientText>50</GradientText> search executed</p>
+            <p>A maximum of <GradientText>11 814</GradientText> shortest path found in one query</p>
+            <p>Reached a maximum degree of <GradientText>8</GradientText></p>
+        </div>
+        <h3>Achievement</h3>
+        <div class="six-degree-achievements">
+            <AbsoluteZero/>
+            <Hot/>
+            <OverHeat/>
+            <Godwin/>
+            <Over9000/>
+    
+        </div>
+    </section>
+    <section class="daily-wiki">
+        <h2>Daily Wiki Adventure</h2>
+        <div>
+            <p>50 daily finished</p>
+            <p>A maximum streak of 5</p>
+            <p>A fastest first try of 5min</p>
+            <p>A shortest first try of 9°</p>
+        </div>
+    </section>
+</div>
+<style lang="scss">
+.Stats {
+    background: #111;
+    padding: 15px;
+}
+.six-degree {
+    > div > p {
+        font-size: 1.5em;
+    }
+}
+.six-degree-achievements {
+    display: flex;
+    justify-content: center;
+    padding: 15ch 0 15px 0;
+    gap: 10ch 5ch;
+    max-width: 100%;
+    flex-wrap: wrap;
+    border-radius: 15px;
+    isolation: isolate;
+    
+}
+.daily-wiki {
+    > div > p {
+        font-size: 1.5em;
+    }
+}
+</style>
