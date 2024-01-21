@@ -1,0 +1,28 @@
+---
+if (Astro.request.method == "POST") {
+    const data = new URLSearchParams();
+    for (const pair of await Astro.request.formData()) {
+        data.append(pair[0], pair[1] as any);
+    }
+    const token = await fetch("https://auth.wikiadventu.re/oauth2/token", {
+        method: 'POST',
+        headers: new Headers({
+            "accept": "application/json",
+            "content-type": "application/x-www-form-urlencoded"
+        }),
+        body: data
+    }).then(r=>r.json());
+    return new Response(JSON.stringify(token), {
+        headers: new Headers({
+            "Access-Control-Allow-Methods": "POST",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "content-type": "application/json"
+        })
+    });
+}
+
+return new Response("", {
+    status: 400,
+    statusText: "Invalid method"
+});
+---

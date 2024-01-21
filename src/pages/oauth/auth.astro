@@ -1,0 +1,33 @@
+---
+import { ory, oryOAuth } from "../../ory/api";
+
+const url = new URL(Astro.request.url);
+
+const form = Object.fromEntries(url.searchParams) as {
+    client_id: string,
+    redirect_uri: string,
+    response_type: string,
+    scope: string,
+    code_challenge: string,
+    code_challenge_method: string,
+    response_mode: string,
+    prompt: string
+};
+
+const cookie = Astro.request.headers.get('cookie')!;
+const session = await ory.toSession(undefined,{ headers: { Cookie: cookie } }).catch(()=>null);
+
+if (session == null && form.prompt == "none") return new Response(null, {
+    status: 401,
+    statusText: "The client is not authenticated. We cannot proceed with prompt='none' ."
+});
+
+const accept = await oryOAuth.acceptOAuth2LoginRequest({
+    loginChallenge: form.code_challenge,
+    acceptOAuth2LoginRequest: {
+        subject: session!.identity!.id
+    }
+})
+
+return Response.redirect(accept.redirect_to);
+---
