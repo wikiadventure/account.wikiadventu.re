@@ -1,0 +1,17 @@
+---
+import MdiTemperatureKelvin from '~icons/mdi/temperature-kelvin';
+import AchievementPill from "../../achievement-pill.astro";
+
+---
+<AchievementPill class="a-AbsoluteZero" title="0 Kelvin! Entropy is a lie.">
+    <MdiTemperatureKelvin/>
+</AchievementPill>
+<style lang="scss" is:global>
+.a-AbsoluteZero {
+    background: #000;
+    border: 1px solid #fff;
+    svg {
+        color: white;
+    }
+}
+</style>

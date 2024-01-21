@@ -1,0 +1,16 @@
+---
+
+---
+<b gradient-text>
+    <slot/>
+</b>
+<style lang="scss" is:global>
+[gradient-text] {
+    background: linear-gradient(var(--color-1),var(--color-2),var(--color-accent));
+    color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.7em;
+    font-weight: 900;
+}
+</style>

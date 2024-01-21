@@ -1,0 +1,31 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'details'>;
+const {  ...props } = Astro.props;
+---
+<details open class="achievement" {...props}>
+    <summary><slot name="summary"/></summary>
+    <slot name="description"/>
+</details>
+<style lang="scss" is:global>
+.achievement {
+    width: 32rem;
+    flex: 0 0 32em;
+    text-align: center;
+
+    > summary {
+        cursor: pointer;
+        list-style: none;
+        // filter: brightness(.1) grayscale(.7);
+        &::marker {
+            display: none;
+            font-size: 0;
+        }
+    }
+    > :not(summary) {
+        margin-top: 25px;
+        min-height: 10ch;
+    }
+}
+</style>
