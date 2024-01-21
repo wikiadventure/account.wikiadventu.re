@@ -1,0 +1,61 @@
+---
+import { getUrlForFlow, ory } from "../ory/api";
+
+import MaterialSymbolsSettings from '~icons/material-symbols/settings';
+import MaterialSymbolsLogin from '~icons/material-symbols/login';
+import MaterialSymbolsLogout from '~icons/material-symbols/logout';
+import MaterialSymbolsHome from '~icons/material-symbols/home';
+
+const isSettingPage = Astro.url.pathname.startsWith("/settings");
+
+const cookie = Astro.request.headers.get('cookie')!;
+
+const session = await ory.toSession(undefined,{ headers: { Cookie: cookie } }).catch(()=>null);
+
+const logoutUrl = session ? await ory.createBrowserLogoutFlow({ cookie }).then(d=>d.logout_url).catch(()=>"") : "";
+// const settingsUrl = session ? getUrlForFlow("settings") : "";
+const loginUrl = getUrlForFlow("login");
+---
+<nav>
+{ session ? <>
+
+    <a href="/account">
+        { session.identity?.traits.username } 
+    </a>
+    { isSettingPage ?
+        <a href="/" title="home">
+            <MaterialSymbolsHome />
+        </a>
+        :
+        <a href="/settings" title="logout">
+            <MaterialSymbolsSettings />
+        </a>
+    }
+    <a href={logoutUrl} title="logout">
+        <MaterialSymbolsLogout />
+    </a>
+
+    </>:<>
+
+    <div>
+        not connected
+    </div>
+    <a href={loginUrl}>
+        <MaterialSymbolsLogin />
+    </a>
+</>}
+</nav>
+<style lang="scss" is:global>
+nav {
+	position: absolute;
+	width: 100%;
+	padding: 15px 25px;
+	gap: 15px;
+	z-index: 10;
+	display: flex;
+	justify-content: flex-end;
+	a {
+		color: #fff;
+	}
+}
+</style>
