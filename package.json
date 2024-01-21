@@ -7,19 +7,22 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "ory:tunnel": "ory tunnel --project nervous-wozniak-xhrj507314 --debug https://dev.local:3000 http://dev.local:4000",
+    "ory:proxy": "ory proxy --project nervous-wozniak-xhrj507314 --debug http://dev.local:3000 http://dev.local:4000"
   },
   "dependencies": {
-    "astro": "^2.4.5"
+    "astro": "^4.2.1"
   },
   "devDependencies": {
-    "@astrojs/netlify": "^2.2.2",
-    "@iconify-json/game-icons": "^1.1.2",
-    "@iconify-json/material-symbols": "^1.1.42",
-    "@iconify-json/mdi": "^1.1.52",
-    "@iconify-json/octicon": "^1.1.39",
-    "@ory/client": "npm:@dasprid/ory-client-fetch@^1.1.21",
-    "sass": "^1.62.1",
-    "unplugin-icons": "^0.16.1"
+    "@astrojs/netlify": "^4.1.1",
+    "@iconify-json/game-icons": "^1.1.7",
+    "@iconify-json/material-symbols": "^1.1.70",
+    "@iconify-json/mdi": "^1.1.64",
+    "@iconify-json/octicon": "^1.1.52",
+    "@ory/client": "npm:@sacramentix/ory-client-fetch@^1.5.1",
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
+    "sass": "^1.70.0",
+    "unplugin-icons": "^0.18.2"
   }
 }
