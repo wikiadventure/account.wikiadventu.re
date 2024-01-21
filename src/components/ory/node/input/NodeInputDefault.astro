@@ -5,6 +5,7 @@ interface Props {
   node: UiNode & { attributes: UiNodeInputAttributes }
 }
 const { node } = Astro.props;
+
 ---
 <label>{ node.meta.label?.text }</label>
 <input

@@ -11,6 +11,7 @@ interface Props {
 }
 const { node } = Astro.props;
 const { type } = node;
+
 ---
 {
   type == "a"     ? <NodeAnchor node={node}/> :

@@ -15,5 +15,8 @@ const [oidcNodes, defaultNodes] =
 <form action={flow.ui.action} method={flow.ui.method}>
     {defaultNodes.map(node=>
         <Node node={node}/>
-    )} 
+    )}
+    {flow.ui.messages?.map(message=>
+        <div error-message>{ message.text }</div>
+    )}
 </form>
