@@ -20,7 +20,7 @@ const loginUrl = getUrlForFlow("login");
 { session ? <>
 
     <a href="/account">
-        { session.identity?.traits.username } 
+        { session.identity?.traits.username ?? session.identity?.traits.email } 
     </a>
     { isSettingPage ?
         <a href="/" title="home" aria-label="home">

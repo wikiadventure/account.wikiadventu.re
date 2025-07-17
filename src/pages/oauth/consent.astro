@@ -31,5 +31,5 @@ const consentSuccess = await oryOAuth.acceptOAuth2ConsentRequest({
             }
         }
     })
-return Response.redirect(consentSuccess.redirect_to);
+return Astro.redirect(consentSuccess.redirect_to);
 ---

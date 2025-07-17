@@ -1,0 +1,75 @@
+dsn: postgres://ory:secret@postgres:5432/ory?sslmode=disable
+
+serve:
+  public:
+    base_url: http://localhost:4433/
+    cors:
+      enabled: true
+      allowed_origins:
+        - http://localhost:4321
+        - https://localhost:4321
+  admin:
+    base_url: http://kratos:4434/
+
+identity:
+  schemas:
+    - id: default
+      url: file:///etc/config/kratos/identity.schema.json
+
+selfservice:
+  default_browser_return_url: https://localhost:4321
+  flows:
+    login:
+      ui_url: https://localhost:4321/login
+      lifespan: 1h
+      style: unified
+    registration:
+      ui_url: https://localhost:4321/register
+      enabled: true
+      lifespan: 1h
+    settings:
+      ui_url: https://localhost:4321/settings
+      lifespan: 1h
+      privileged_session_max_age: 1h
+      required_aal: highest_available
+    error:
+      ui_url: https://localhost:4321/error
+    verification:
+      enabled: true
+      lifespan: 1h
+      notify_unknown_recipients: false
+      ui_url: https://localhost:4321/verify
+      use: code
+
+  methods:
+    password:
+      enabled: false
+    oidc:
+      enabled: true
+      config:
+        providers:
+          - id: google
+            provider: google
+            client_id: TODO_REPLACE
+            client_secret: TODO_REPLACE
+            issuer_url: https://accounts.google.com
+            mapper_url: file:///etc/config/kratos/oidc-mapper.jsonnet
+          - id: github
+            provider: github
+            client_id: TODO_REPLACE
+            client_secret: TODO_REPLACE
+            issuer_url: https://github.com/
+            mapper_url: file:///etc/config/kratos/oidc-mapper-github.jsonnet
+            scope:
+              - user:email
+          - id: discord
+            provider: discord
+            client_id: TODO_REPLACE
+            client_secret: TODO_REPLACE
+            issuer_url: https://discord.com
+            mapper_url: file:///etc/config/kratos/oidc-mapper.jsonnet
+
+session:
+  cookie:
+    domain: localhost
+    same_site: Lax

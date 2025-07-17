@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:14.18
+    environment:
+      POSTGRES_USER: ory
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+
+  kratos:
+    image: oryd/kratos:v1.3.1
+    depends_on:
+      - postgres
+    ports:
+      - "4433:4433"
+      - "4434:4434"
+    volumes:
+      - ./kratos:/etc/config/kratos
+    entrypoint: |
+      sh -c '
+      kratos migrate sql --read-from-env --yes &&
+      kratos serve --config /etc/config/kratos/kratos.yml
+      '
+
+  hydra:
+    image: oryd/hydra:v2.3
+    depends_on:
+      - postgres
+    ports:
+      - "4444:4444"
+      - "4445:4445"
+    volumes:
+      - ./hydra:/etc/config/hydra
+    entrypoint: |
+      sh -c '
+      hydra migrate sql --yes postgres://ory:secret@postgres:5432/hydra_db?sslmode=disable &&
+      hydra serve all --dev
+      '
+
+volumes:
+  postgres_data:

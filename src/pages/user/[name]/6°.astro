@@ -1,4 +1,9 @@
 ---
+import AbsoluteZero from "../../../components/achievement/six-degree/AbsoluteZero.astro";
+import Godwin from "../../../components/achievement/six-degree/Godwin.astro";
+import Hot from "../../../components/achievement/six-degree/Hot.astro";
+import Over9000 from "../../../components/achievement/six-degree/Over9000.astro";
+import OverHeat from "../../../components/achievement/six-degree/OverHeat.astro";
 return new Response("Coming soon!", {status: 200});
 const username = Astro.params.name;
 
@@ -25,7 +30,11 @@ const username = Astro.params.name;
             <div>Reached 12°</div>
             <div>Achievement 5 / 5</div>
             <section six-degree-achievements>
-
+                <AbsoluteZero/>
+                <Godwin/>
+                <Hot/>
+                <Over9000/>
+                <OverHeat/>
             </section>
         </main>
 	</body>

@@ -13,12 +13,16 @@ const flowError = await ory.getFlowError({ id }).catch(()=>({error: "The error i
     <section error-section>
         <h1>Wiki Adventure account</h1>
         <h2>error</h2>
-        <div>
+        <p>
             { JSON.stringify(flowError.error) }
         </div>
     </section>
 </OryLayout>
-<style lang="scss" is:global>
-
+<style is:global>
+[error-section] {
+    margin: 30px;
+    p {
+        word-break: break-all;
+    }
+}
 </style>
-    

@@ -1,5 +1,5 @@
 ---
-import type { LoginFlow } from "@ory/client";
+import type { LoginFlow } from "@ory/client-fetch/dist/index";
 import OryForm from "../components/ory/OryForm.astro";
 import OryLayout from "../layout/OryLayout.astro";
 import { getUrlForFlow, ory, oryOAuth } from "../ory/api";
@@ -21,16 +21,20 @@ if (session && loginChallenge) {
     const loginSuccess = await oryOAuth.acceptOAuth2LoginRequest({
         loginChallenge,
         acceptOAuth2LoginRequest: {
-            subject: session.identity.id
+            subject: session.identity!.id
         }
     });
-    return Response.redirect(loginSuccess.redirect_to);
+    return Astro.redirect(loginSuccess.redirect_to);
 }
-var loginFlow:LoginFlow | null = null;
+var loginFlow:LoginFlow | null | {error:any} = null;
 if (flow) {
-    loginFlow = await ory.getLoginFlow({ id: flow, cookie }).catch(e=>null);
+    loginFlow = await ory.getLoginFlow({ id: flow, cookie }).catch(e=>({error: e}));
 }
-if (!loginFlow) return Response.redirect(getUrlForFlow("login", url.searchParams));
+if (!loginFlow) return Astro.redirect(getUrlForFlow("login", url.searchParams));
+if ("error" in loginFlow) {
+    console.log(await loginFlow.error.response.text());
+    return loginFlow.error.response;
+}
 
 ---
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>
@@ -42,7 +46,7 @@ if (!loginFlow) return Response.redirect(getUrlForFlow("login", url.searchParams
         <p>No account? <a href="/register">Register</a> one!</p>
     </section>
 </OryLayout>
-<style lang="scss" is:global>
+<style is:global>
 
 </style>
     

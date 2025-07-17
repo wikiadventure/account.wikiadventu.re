@@ -1,5 +1,5 @@
 ---
-import type { RecoveryFlow } from "@ory/client";
+import type { RecoveryFlow } from "@ory/client-fetch";
 import OryForm from "../components/ory/OryForm.astro";
 import OryLayout from "../layout/OryLayout.astro";
 import { getUrlForFlow, ory } from "../ory/api";
@@ -16,7 +16,7 @@ var recoverFlow:RecoveryFlow | null = null;
 if (flow) {
     recoverFlow = await ory.getRecoveryFlow({ id: flow, cookie }).catch(()=>null);
 }
-if (!recoverFlow) return Response.redirect(getUrlForFlow("recovery", url.searchParams));
+if (!recoverFlow) return Astro.redirect(getUrlForFlow("recovery", url.searchParams));
 
 ---
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>

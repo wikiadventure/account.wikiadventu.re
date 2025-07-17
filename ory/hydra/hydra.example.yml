@@ -1,0 +1,14 @@
+dsn: postgres://ory:secret@postgres:5432/ory?sslmode=disable
+
+urls:
+  self:
+    issuer: http://localhost:4444
+  consent: http://localhost:3000/oauth/consent
+  login: http://localhost:3000/oauth/auth
+
+secrets:
+  system:
+    - TODO_REPLACE
+
+strategies:
+  access_token: jwt

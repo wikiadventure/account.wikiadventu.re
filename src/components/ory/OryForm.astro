@@ -1,6 +1,6 @@
 ---
 import Node from "./Node.astro";
-import type { LoginFlow, RecoveryFlow, RegistrationFlow, SettingsFlow, UiNode, VerificationFlow } from "@ory/client";
+import type { LoginFlow, RecoveryFlow, RegistrationFlow, SettingsFlow, UiNode, VerificationFlow } from "@ory/client-fetch";
 
 interface Props {
     flow: LoginFlow | RegistrationFlow | SettingsFlow |
@@ -13,7 +13,10 @@ const [oidcNodes, defaultNodes] =
 
 ---
 <form action={flow.ui.action} method={flow.ui.method}>
-    {defaultNodes.map(node=>
+    <!-- {defaultNodes.map(node=>
+        <Node node={node}/>
+    )} -->
+    {oidcNodes.map(node=>
         <Node node={node}/>
     )}
     {flow.ui.messages?.map(message=>

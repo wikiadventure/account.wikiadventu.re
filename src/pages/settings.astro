@@ -1,5 +1,5 @@
 ---
-import type { SettingsFlow } from "@ory/client";
+import type { SettingsFlow } from "@ory/client-fetch";
 import OryForm from "../components/ory/OryForm.astro";
 import OryLayout from "../layout/OryLayout.astro";
 import { getUrlForFlow, ory } from "../ory/api";
@@ -13,12 +13,16 @@ const {
 
 const cookie = Astro.request.headers.get('cookie')!;
 
-var settingsFlow:SettingsFlow | null = null;
+var settingsFlow:SettingsFlow | null | {error: any} = null;
 if (flow) {
-    settingsFlow = await ory.getSettingsFlow({ id: flow, cookie }).catch(()=>null);
+    settingsFlow = await ory.getSettingsFlow({ id: flow, cookie }).catch((e)=>({error: e}));
 }
-if (!settingsFlow) return Response.redirect(getUrlForFlow("settings", url.searchParams));
 
+if (!settingsFlow) return Astro.redirect(settingFlowUrl);
+if ("error" in settingsFlow) {
+    console.log(await settingsFlow.error.response.text());
+    return settingsFlow.error.response;
+}
 ---
 <Nav/>
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>

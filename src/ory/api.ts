@@ -1,4 +1,4 @@
-import { Configuration, FrontendApi, IdentityApi, OAuth2Api } from "@ory/client";
+import { Configuration, FrontendApi, IdentityApi, OAuth2Api } from "@ory/client-fetch";
 
 export const oryConfig = new Configuration({
     basePath: import.meta.env.ORY_BASE_PATH,
@@ -19,3 +19,4 @@ export type BrowserFlow = "login" | "registration" | "settings" | "recovery" | "
 
 export const getUrlForFlow = (flow: BrowserFlow, query?: URLSearchParams) =>
     `${import.meta.env.ORY_BASE_PATH}/self-service/${flow}/browser${query ? `?${query.toString()}` : ""}`;
+

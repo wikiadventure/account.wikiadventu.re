@@ -29,5 +29,5 @@ const accept = await oryOAuth.acceptOAuth2LoginRequest({
     }
 })
 
-return Response.redirect(accept.redirect_to);
+return Astro.redirect(accept.redirect_to);
 ---

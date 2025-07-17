@@ -1,5 +1,5 @@
 ---
-import type { RegistrationFlow } from "@ory/client";
+import type { RegistrationFlow } from "@ory/client-fetch";
 import OryForm from "../components/ory/OryForm.astro";
 import OryLayout from "../layout/OryLayout.astro";
 import { getUrlForFlow, ory } from "../ory/api";
@@ -16,7 +16,7 @@ var registerFlow:RegistrationFlow | null = null;
 if (flow) {
     registerFlow = await ory.getRegistrationFlow({ id: flow, cookie }).catch(()=>null);
 }
-if (!registerFlow) return Response.redirect(getUrlForFlow("registration", url.searchParams));
+if (!registerFlow) return Astro.redirect(getUrlForFlow("registration", url.searchParams));
 
 ---
 <OryLayout title="Wiki Adventure account" meta={{title: "Wiki Adventure account", description: "Create and manage your Wiki Adventure account."}}>

@@ -16,8 +16,10 @@ const {
 } = node.attributes;
 
 ---
+{/*@ts-expect-error*/}
 <script src={src} async={async} crossorigin={crossorigin}
-        integrity={integrity} referrerpolicy={referrerpolicy}
+        integrity={integrity}
+        referrerpolicy={referrerpolicy}
         type={type}>
 
 </script>
